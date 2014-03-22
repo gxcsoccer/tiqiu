@@ -332,6 +332,11 @@ $(document).ready(function() {
     $('#popup-confirm').modal('show');
   });
 
+  $(document).on('click', '.cancel', function() {
+    $('.cal-cell').popover('hide');
+    $('#popup-cancel').modal('show');
+  });
+
   $('#field-switcher a').click(function(e) {
     e.preventDefault()
     $(this).tab('show')

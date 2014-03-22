@@ -9,9 +9,8 @@
     <link rel="stylesheet" type="text/css" href="css/navs.css">
     <link rel="stylesheet" type="text/css" href="css/form.css">
     <link rel="stylesheet" type="text/css" href="css/modals.css">
-    <link rel="stylesheet" type="text/css" href="css/popover.css">
-    <!-- <link rel="stylesheet" type="text/css" href="css/calendar.css"> -->
-    <link rel="stylesheet" type="text/css" href="css/cal.css">
+    <link rel="stylesheet" type="text/css" href="css/popover.css">\
+    <link rel="stylesheet" type="text/css" href="css/calendar.css">
     <link rel="stylesheet" type="text/css" href="css/datepicker.css">
     <script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
     <script type="text/javascript" src="js/juicer-min.js"></script>
@@ -282,6 +281,47 @@
                     <button type="button" class="btn btn-default btn-medium" data-dismiss="modal">取消</button>
                     <button type="button" class="btn btn-medium">拒绝申请</button>
                     <button type="button" class="btn btn-primary btn-medium">确认申请</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div id="popup-cancel" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+                    <h4 class="modal-title">取消预定</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-item">
+                        <label>联系人：</label>
+                        <div class="controls">
+                            <span>谢克亮</span>
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <label>联系电话：</label>
+                        <div class="controls">
+                            <span>13800138000</span>
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <label>取消原因：</label>
+                        <div class="controls">
+                            <input type="text" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-medium" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary btn-medium">确认</button>
                 </div>
             </div>
             <!-- /.modal-content -->
