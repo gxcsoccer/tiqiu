@@ -104,8 +104,8 @@
             </div>
 
             <div class="form-item" ng-show="showCaptcha">
-                <input type="text" ng-model="password" placeholder="验证码：" style="width: 140px; margin-right: 10px;" />
-                <img src="{{captchaUrl}}" width="110" />
+                <input type="text" ng-model="code" placeholder="验证码：" style="width: 140px; margin-right: 10px;" />
+                <img ng-src="{{captchaUrl}}" width="110" />
                 <a href="javascript:void(0);" ng-click="refreshCode()" style="line-height:38px;">刷新</a>
             </div>
 

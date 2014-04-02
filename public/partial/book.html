@@ -91,7 +91,7 @@
 
         <div class="cal-week-box clearfix">
             <div class="cal-column-fluid" ng-repeat="day in days">
-                <div class="cal-cell {{p.Status}}" ng-repeat="p in day.period" ng-class="{solo: p.OrderType===3}" data-time="{{p.StartTime}} - {{p.EndTime}}"></div>
+                <div class="cal-cell {{p.Status}}" ng-repeat="p in day.period" ng-class="{solo: p.OrderType===3}" data-time="{{p.StartTime.slice(0,5)}} - {{p.EndTime.slice(0,5)}}"></div>
             </div>
         </div>
     </div>

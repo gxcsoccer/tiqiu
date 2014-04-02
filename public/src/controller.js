@@ -3,17 +3,18 @@ moment.lang('zh-cn');
 angular.module('tiqiu')
   .controller('LoginCtrl', ['$rootScope', '$scope', '$location', '$window', 'Auth',
     function($rootScope, $scope, $location, $window, Auth) {
-      $scope.captchaUrl = '';
+      $scope.captchaUrl = 'http://api.tiqiu365.com/ValidateCodeHandler.ashx?t' + (+new Date());
       $scope.showCaptcha = false;
 
       $scope.refreshCode = function() {
-        $scope.captchaUrl = 'http://api.tiqiu365.com/ValidateCodeHandler.ashx?CodeFlag=haha&t' + (+new Date());
+        $scope.captchaUrl = 'http://api.tiqiu365.com/ValidateCodeHandler.ashx?t' + (+new Date());
       };
 
       $scope.login = function() {
         Auth.login({
           username: $scope.username,
-          password: $scope.password
+          password: $scope.password,
+          code: $scope.code
         })
           .then(function() {
             $location.path('/book');
@@ -56,7 +57,7 @@ angular.module('tiqiu')
           }
         });
 
-        Book.getFieldItemList()
+        Book.getFieldItemList(field.id)
           .then(function(data) {
             $scope.tabs = data.map(function(t) {
               return {
@@ -83,28 +84,7 @@ angular.module('tiqiu')
 
       $scope.switchFieldItem = function(id) {
         fieldId = id;
-        Book.getFieldItemScheduledList(id, start, end)
-          .then(function(data) {
-            data.forEach(function(d) {
-              d.Status = statusMap[d.Status + ''];
-            });
-
-            var map = _.groupBy(data, function(d) {
-              return d.ScheduledDate;
-            }),
-              days = [];
-
-            var i = 0;
-            for (var key in map) {
-              days.push({
-                weekday: date[i++],
-                day: moment(key).format('MMMDo'),
-                period: map[key]
-              });
-            }
-
-            $scope.days = days;
-          })
+        getScheduleList();
       };
 
       $scope.query = function(dir) {
@@ -116,6 +96,16 @@ angular.module('tiqiu')
           end = moment(Date.parse(end)).add('days', 7).format('YYYY-MM-DD');
         }
 
+        getScheduleList();
+      };
+
+      function getScheduleList() {
+        var dateList = [],
+          i;
+        for (i = 0; i < 7; i++) {
+          dateList.push(moment(Date.parse(start)).add('days', i).format('YYYY-MM-DD'));
+        }
+
         Book.getFieldItemScheduledList(fieldId, start, end)
           .then(function(data) {
             data.forEach(function(d) {
@@ -123,21 +113,57 @@ angular.module('tiqiu')
             });
 
             var map = _.groupBy(data, function(d) {
-              return d.ScheduledDate;
+              return d.ScheduledDate.slice(0, 10);
             }),
               days = [];
 
-            var i = 0;
-            for (var key in map) {
+            i = 0;
+            for (i = 0; i < 7; i++) {
               days.push({
-                weekday: date[i++],
-                day: moment(key).format('MMMDo'),
-                period: map[key]
+                weekday: date[i],
+                day: moment(dateList[i]).format('MMMDo'),
+                period: map[dateList[i]] || [{
+                  "Status": 'Void',
+                  "StartTime": "09:00:00",
+                  "EndTime": "10:30:00"
+                }, {
+                  "Status": 'Void',
+                  "StartTime": "10:30:00",
+                  "EndTime": "12:00:00"
+                }, {
+                  "Status": 'Void',
+                  "StartTime": "12:00:00",
+                  "EndTime": "13:30:00"
+                }, {
+                  "Status": 'Void',
+                  "StartTime": "13:30:00",
+                  "EndTime": "15:00:00"
+                }, {
+                  "Status": 'Void',
+                  "StartTime": "15:00:00",
+                  "EndTime": "16:30:00"
+                }, {
+                  "Status": 'Void',
+                  "StartTime": "16:30:00",
+                  "EndTime": "18:00:00"
+                }, {
+                  "Status": 'Void',
+                  "StartTime": "18:00:00",
+                  "EndTime": "19:30:00"
+                }, {
+                  "Status": 'Void',
+                  "StartTime": "19:30:00",
+                  "EndTime": "21:00:00"
+                }, {
+                  "Status": 'Void',
+                  "StartTime": "21:00:00",
+                  "EndTime": "22:30:00"
+                }]
               });
             }
 
             $scope.days = days;
-          })
-      };
+          });
+      }
     }
   ]);

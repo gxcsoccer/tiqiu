@@ -6,12 +6,13 @@ angular.module('tiqiu')
       login: function(user) {
         var deferred = $q.defer();
         $http({
-          url: 'http://api.tiqiu365.com/AccountHandler.ashx',
+          url: 'http://api.tiqiu365.com/Accounthandler.ashx',
           method: "GET",
           params: {
             action: 'LoginB',
-            Name: user.username,
-            pwd: user.password
+            name: user.username,
+            pwd: user.password,
+            code: user.code
           }
         })
           .then(function(response) {
@@ -43,16 +44,18 @@ angular.module('tiqiu')
         var user = Auth.getCurrentUser() || {};
         var deferred = $q.defer();
         $http({
-          url: '/FieldHandler.ashx',
+          url: 'http://api.tiqiu365.com/FieldHandler.ashx',
           method: "GET",
           params: {
             action: 'GetFieldList',
-            token: user.token
+            token: user.Token,
+            pageindex: 0,
+            pagesize: 1000
           }
         })
           .then(function(response) {
             if (response.data && response.data.Result == 1) {
-              deferred.resolve(response.data.Data);
+              deferred.resolve(response.data.Data.ItemList);
             } else {
               deferred.reject(response.data)
             }
@@ -63,15 +66,17 @@ angular.module('tiqiu')
           });
         return deferred.promise;
       },
-      getFieldItemList: function() {
+      getFieldItemList: function(fieldId) {
         var user = Auth.getCurrentUser() || {};
         var deferred = $q.defer();
         $http({
-          url: '/FieldHandler.ashx',
+          url: 'http://api.tiqiu365.com/FieldHandler.ashx',
           method: "GET",
           params: {
             action: 'GetFieldItemList',
-            token: user.token
+            token: user.Token,
+            AccountBID: user.ID,
+            id: fieldId
           }
         })
           .then(function(response) {
@@ -91,12 +96,13 @@ angular.module('tiqiu')
         var user = Auth.getCurrentUser() || {};
         var deferred = $q.defer();
         $http({
-          url: '/FieldHandler.ashx',
+          url: 'http://api.tiqiu365.com/FieldHandler.ashx',
           method: "GET",
           params: {
             action: 'GetFieldItemScheduledList',
-            token: user.token,
-            fieldId: fieldId,
+            token: user.Token,
+            AccountBID: user.ID,
+            id: fieldId,
             start: start,
             end: end
           }
