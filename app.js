@@ -13,6 +13,7 @@ app.get('/AccountHandler.ashx', function(req, res, next) {
     username = query.Name,
     password = query.pwd;
 
+  // setTimeout(function() {
   if (action === 'Login') {
     if (username === 'admin' && password == '123') {
       res.json({
@@ -36,6 +37,8 @@ app.get('/AccountHandler.ashx', function(req, res, next) {
       });
     }
   }
+  // }, 500);
+
 });
 
 app.get('/FieldHandler.ashx', function(req, res, next) {

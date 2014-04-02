@@ -1,6 +1,8 @@
-angular.module('tiqiu', ['ui.router', 'ui.bootstrap'])
-  .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
-    function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+angular.module('tiqiu', ['ui.router', 'ui.bootstrap', 'chieffancypants.loadingBar'])
+  .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', 'cfpLoadingBarProvider',
+    function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, cfpLoadingBarProvider) {
+      cfpLoadingBarProvider.includeSpinner = true;
+
       $stateProvider
         .state('login', {
           url: '^/login',
