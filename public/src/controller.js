@@ -35,6 +35,29 @@ angular.module('tiqiu')
       start = moment(current).subtract('days', day).format('YYYY-MM-DD');
       end = moment(current).add('days', 6 - day).format('YYYY-MM-DD');
 
+      // 场地改变
+      $scope.changeField = function(field) {
+        $scope.fields.forEach(function(f) {
+          if (f.id == field.id) {
+            f.active = true;
+          } else {
+            f.active = false;
+          }
+        });
+
+        Book.getFieldItemList()
+          .then(function(data) {
+            $scope.tabs = data.map(function(t) {
+              return {
+                id: t.ID,
+                title: t.Name
+              };
+            });
+          }, function() {
+            console.error('error');
+          });
+      };
+
       Book.getFieldList()
         .then(function(data) {
           $scope.fields = data.map(function(f, i) {
@@ -44,21 +67,10 @@ angular.module('tiqiu')
               active: i === 0
             }
           });
+          $scope.changeField($scope.fields[0]);
         });
 
-      Book.getFieldItemList()
-        .then(function(data) {
-          $scope.tabs = data.map(function(t) {
-            return {
-              id: t.ID,
-              title: t.Name
-            };
-          });
-        }, function() {
-          console.error('error');
-        });
-
-      $scope.switchField = function switchField(id) {
+      $scope.switchFieldItem = function(id) {
         fieldId = id;
         Book.getFieldItemScheduledList(id, start, end)
           .then(function(data) {
