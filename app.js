@@ -5,7 +5,23 @@ var express = require('express'),
   mock = require('mockjs');
 
 app.use(express.urlencoded());
+app.use(express.cookieParser());
+app.use(express.session({
+  secret: 'tiqiu_123456789',
+  cookie: {
+    maxAge: 30 * 60 * 1000 //ms
+  }
+}));
 app.use(express.static(__dirname + '/public'));
+
+// app.get('/captcha', function(req, res, next) {
+//   var cap = captcha.get();
+
+//   req.session.captchaCode = cap[0];
+
+//   res.setHeader('Content-Type', 'image/jpeg');
+//   res.end(cap[1]);
+// });
 
 app.get('/AccountHandler.ashx', function(req, res, next) {
   var query = url.parse(req.url, true).query || {},

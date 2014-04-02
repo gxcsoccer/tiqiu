@@ -3,6 +3,13 @@ moment.lang('zh-cn');
 angular.module('tiqiu')
   .controller('LoginCtrl', ['$rootScope', '$scope', '$location', '$window', 'Auth',
     function($rootScope, $scope, $location, $window, Auth) {
+      $scope.captchaUrl = '';
+      $scope.showCaptcha = false;
+
+      $scope.refreshCode = function() {
+        $scope.captchaUrl = 'http://api.tiqiu365.com/ValidateCodeHandler.ashx?CodeFlag=haha&t' + (+new Date());
+      };
+
       $scope.login = function() {
         Auth.login({
           username: $scope.username,
@@ -11,7 +18,11 @@ angular.module('tiqiu')
           .then(function() {
             $location.path('/book');
           }, function(response) {
-            $scope.error = response.message;
+            $scope.error = response.HelpMessage;
+            if (response.HelpMessage == '你已输入错误3次用户名密码，请仔细核对并填写验证码！') {
+              $scope.showCaptcha = true;
+              $scope.refreshCode();
+            }
           });
       };
     }

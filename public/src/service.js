@@ -6,7 +6,7 @@ angular.module('tiqiu')
       login: function(user) {
         var deferred = $q.defer();
         $http({
-          url: '/AccountHandler.ashx',
+          url: 'http://api.tiqiu365.com/AccountHandler.ashx',
           method: "GET",
           params: {
             action: 'Login',
@@ -15,15 +15,15 @@ angular.module('tiqiu')
           }
         })
           .then(function(response) {
-            if (response.data && response.data.isSuccess) {
-              currentUser = response.data.user;
-              deferred.resolve(response.data.user);
+            if (response.data && response.data.Result == 1) {
+              currentUser = response.data.Data;
+              deferred.resolve(response.data.Data);
             } else {
               deferred.reject(response.data)
             }
           }, function(response) {
             deferred.reject({
-              message: '系统不可用'
+              HelpMessage: '系统不可用'
             });
           });
         return deferred.promise;
