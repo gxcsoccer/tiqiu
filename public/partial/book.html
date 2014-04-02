@@ -1,0 +1,99 @@
+<link rel="stylesheet" type="text/css" href="css/navs.css">
+<link rel="stylesheet" type="text/css" href="css/calendar.css">
+<link rel="stylesheet" type="text/css" href="css/book.css">
+<nav id="sidebar">
+    <header>
+        <a class="justify" href="/">
+            <i class="iconfont_282">&#983049</i>
+            <span>管理中心</span>
+        </a>
+    </header>
+
+    <ul>
+        <li class="nav-divider">
+            <a class="justify" href="/">
+                <span class="dib">首页</span> <i class="iconfont dib">&#336;</i>
+            </a>
+        </li>
+        <li>
+            <a class="justify" href="/">
+                <span class="dib">场地管理</span> <i class="iconfont dib">&#307;</i>
+            </a>
+        </li>
+        <li>
+            <a class="justify" href="/">
+                <span class="dib">场次规则</span> <i class="iconfont dib">&#277;</i>
+            </a>
+        </li>
+        <li class="nav-divider">
+            <a class="justify">
+                <span class="dib">预定管理</span> <i class="iconfont dib">&#508;</i>
+            </a>
+
+            <ul id="field-list" style="margin:5px 0;">
+                <li ng-repeat="field in fields" ng-class="{active: field.active}">
+                    <a href="#">{{field.name}}</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a class="justify" href="/">
+                <span class="dib">报表中心</span> <i class="iconfont dib">&#251;</i>
+            </a>
+        </li>
+        <li class="nav-divider">
+            <a class="justify" href="/">
+                <span class="dib">经营分析</span> <i class="iconfont dib">&#350;</i>
+            </a>
+        </li>
+        <li>
+            <a class="justify" href="/">
+                <span class="dib">系统设置</span> <i class="iconfont dib">&#355;</i>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<div id="content">
+
+    <!-- <ul id="field-switcher" class="nav nav-tabs clearfix">
+    </ul> -->
+    <tabset>
+        <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled" select="switchField(tab.id)">
+        </tab>
+    </tabset>
+
+    <div id="legend">
+        <ul>
+            <li style="border: none; padding: 0">
+                <span style="display: inline-block; width: 50px; border: solid 1px #bdbdbd; height: 12px; vertical-align: middle; margin-right: 5px;"></span>
+                <span style="vertical-align: middle; ">可预订</span>
+            </li>
+            <li style="border-left-color: rgba(244, 249, 54, 0.65098)">预订申请</li>
+            <li style="border-left-color: rgba(39, 216, 18, 0.65098)">已预订</li>
+            <li style="border-left-color: #ff6a00">单飞</li>
+            <li style="border-left-color: #0094ff">约战申请(无应战球队)</li>
+            <li style="border-left-color: #0026ff">约战申请(有应战球队)</li>
+            <li style="border-left-color: #bebdbd">不可用</li>
+        </ul>
+    </div>
+
+    <div id="calendar" class="cal-context">
+        <div class="cal-row-fluid cal-row-head clearfix">
+            <a id="prev" href="javascript:void(0);" ng-click="query('prev')"><i class="iconfont">&#403;</i></a>
+            <a id="next" href="javascript:void(0);" ng-click="query('next')"><i class="iconfont">&#402;</i></a>
+            <div class="cal-cell1" ng-repeat="day in days">
+                <span>{{day.weekday}}</span>
+                <br>
+                <span>{{day.day}}</span>
+            </div>
+        </div>
+
+        <div class="cal-week-box clearfix">
+            <div class="cal-column-fluid" ng-repeat="day in days">
+                <div class="cal-cell {{p.Status}}" ng-repeat="p in day.period" ng-class="{solo: p.OrderType===3}" data-time="{{p.StartTime}} - {{p.EndTime}}"></div>
+            </div>
+        </div>
+    </div>
+
+</div>

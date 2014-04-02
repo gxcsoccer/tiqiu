@@ -1,3 +1,6 @@
+.cal-row-head {
+    position: relative;
+}
 .cal-row-head .cal-cell1:first-child, .cal-row-head .cal-cell1 {
     font-weight: bolder;
     text-align: center;
@@ -49,13 +52,13 @@
     content:attr(data-time);
     color: #555555;
 }
-.available {
+.Available {
     background-color: #fff;
 }
-.processing {
+.Booking {
     background-color: rgba(244, 249, 54, 0.65098);
 }
-.ordered {
+.Booked {
     background-color: rgba(39, 216, 18, 0.65098);
 }
 .solo {
@@ -105,10 +108,10 @@
     background-color: #ff6a00;
     content:'';
 }*/
- .unavailable {
+ .Void {
     background-color: #bebdbd;
 }
-.available:hover, .processing:hover, .ordered:hover, .solo:hover, .reserve:hover {
+.Available:hover, .Booking:hover, .Booked:hover, .solo:hover, .reserve:hover {
     cursor: pointer;
     background-color: #ededed;
 }

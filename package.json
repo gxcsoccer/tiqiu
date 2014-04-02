@@ -1,0 +1,16 @@
+{
+  "name": "tiqiu",
+  "version": "0.0.0",
+  "description": "tiqiu is a webapp.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gxcsoccer@126.com",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^3.5.1",
+    "moment": "^2.5.1",
+    "mockjs": "^0.1.1"
+  }
+}
