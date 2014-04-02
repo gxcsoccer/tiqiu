@@ -9,7 +9,7 @@ angular.module('tiqiu')
           url: 'http://api.tiqiu365.com/AccountHandler.ashx',
           method: "GET",
           params: {
-            action: 'Login',
+            action: 'LoginB',
             Name: user.username,
             pwd: user.password
           }
