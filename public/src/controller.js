@@ -43,7 +43,7 @@ angular.module('tiqiu')
       }, current = new Date(),
         day = current.getDay(),
         date = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-        start, end, fieldId;
+        start, end, fieldItem;
       start = moment(current).subtract('days', day).format('YYYY-MM-DD');
       end = moment(current).add('days', 6 - day).format('YYYY-MM-DD');
 
@@ -57,17 +57,13 @@ angular.module('tiqiu')
           }
         });
 
-        Book.getFieldItemList(field.id)
-          .then(function(data) {
-            $scope.tabs = data.map(function(t) {
-              return {
-                id: t.ID,
-                title: t.Name
-              };
-            });
-          }, function() {
-            console.error('error');
-          });
+        $scope.tabs = field.item.map(function(t) {
+          return {
+            id: t.ID,
+            title: t.Name,
+            fieldId: t.FieldID
+          };
+        });
       };
 
       Book.getFieldList()
@@ -76,14 +72,15 @@ angular.module('tiqiu')
             return {
               id: f.ID,
               name: f.Name,
-              active: i === 0
+              active: i === 0,
+              item: f.Items
             }
           });
           $scope.changeField($scope.fields[0]);
         });
 
-      $scope.switchFieldItem = function(id) {
-        fieldId = id;
+      $scope.switchFieldItem = function(item) {
+        fieldItem = item;
         getScheduleList();
       };
 
@@ -106,7 +103,7 @@ angular.module('tiqiu')
           dateList.push(moment(Date.parse(start)).add('days', i).format('YYYY-MM-DD'));
         }
 
-        Book.getFieldItemScheduledList(fieldId, start, end)
+        Book.getFieldItemScheduledList(fieldItem, start, end)
           .then(function(data) {
             data.forEach(function(d) {
               d.Status = statusMap[d.Status + ''];

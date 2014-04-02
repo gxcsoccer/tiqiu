@@ -92,7 +92,7 @@ angular.module('tiqiu')
           });
         return deferred.promise;
       },
-      getFieldItemScheduledList: function(fieldId, start, end) {
+      getFieldItemScheduledList: function(fieldItem, start, end) {
         var user = Auth.getCurrentUser() || {};
         var deferred = $q.defer();
         $http({
@@ -102,7 +102,8 @@ angular.module('tiqiu')
             action: 'GetFieldItemScheduledList',
             token: user.Token,
             AccountBID: user.ID,
-            id: fieldId,
+            id: fieldItem.fieldId,
+            FieldItemID: fieldItem.id,
             start: start,
             end: end
           }
