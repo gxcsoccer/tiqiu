@@ -35,12 +35,15 @@ angular.module('tiqiu')
         data.scheduledDate = moment(data.schduleItem.ScheduledDate).format('YYYY年MMMDo dddd')
         $scope.data = data;
         $scope.ok = function() {
-          $modalInstance.close({
-            minPlayerCount: $scope.minPlayerCount,
-            priceUnit: $scope.priceUnit,
-            price: $scope.price,
+          Book.orderFreeTeam({
+            minPlayerCount: this.minPlayerCount,
+            priceUnit: this.priceUnit,
+            price: this.price,
             scheduledId: data.schduleItem.ScheduledID
-          });
+          })
+            .then(function() {
+              $modalInstance.close()
+            });
         };
 
         $scope.cancel = function() {
@@ -65,10 +68,7 @@ angular.module('tiqiu')
         });
 
         modalInstance.result.then(function(data) {
-          Book.orderFreeTeam(data)
-            .then(function() {
-              getScheduleList();
-            }, function() {})
+          getScheduleList();
         }, function() {});
       };
 
