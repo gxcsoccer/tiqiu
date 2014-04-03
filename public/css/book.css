@@ -89,6 +89,7 @@ a {
 .popover .btn {
     display: block;
     margin: 5px 0;
+    width: 70px;
     background: transparent;
     border-bottom-color: #ddd !important;
 }

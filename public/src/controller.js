@@ -28,8 +28,50 @@ angular.module('tiqiu')
       };
     }
   ])
-  .controller('BookCtrl', ['$rootScope', '$scope', '$location', '$window', 'Book',
-    function($rootScope, $scope, $location, $window, Book) {
+  .controller('BookCtrl', ['$rootScope', '$scope', '$location', '$window', 'Book', '$modal',
+    function($rootScope, $scope, $location, $window, Book, $modal) {
+
+      function BookModalCtrl($scope, $modalInstance, data) {
+        data.scheduledDate = moment(data.schduleItem.ScheduledDate).format('YYYY年MMMDo dddd')
+        $scope.data = data;
+        $scope.ok = function() {
+          $modalInstance.close({
+            minPlayerCount: $scope.minPlayerCount,
+            priceUnit: $scope.priceUnit,
+            price: $scope.price,
+            scheduledId: data.schduleItem.ScheduledID
+          });
+        };
+
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel');
+        };
+      }
+
+      $scope.openDialog = function(schduleItem) {
+
+        var modalInstance = $modal.open({
+          templateUrl: 'partial/book-dialog.html',
+          controller: BookModalCtrl,
+          resolve: {
+            data: function() {
+              return {
+                schduleItem: schduleItem,
+                fieldItem: fieldItem,
+                field: field
+              };
+            }
+          }
+        });
+
+        modalInstance.result.then(function(data) {
+          Book.orderFreeTeam(data)
+            .then(function() {
+              getScheduleList();
+            }, function() {})
+        }, function() {});
+      };
+
       var statusMap = {
         '0': 'Available',
         '1': 'Booking',
@@ -43,21 +85,22 @@ angular.module('tiqiu')
       }, current = new Date(),
         day = current.getDay(),
         date = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-        start, end, fieldItem;
+        start, end, field, fieldItem;
       start = moment(current).subtract('days', day).format('YYYY-MM-DD');
       end = moment(current).add('days', 6 - day).format('YYYY-MM-DD');
 
       // 场地改变
-      $scope.changeField = function(field) {
+      $scope.changeField = function(fi) {
+        field = fi;
         $scope.fields.forEach(function(f) {
-          if (f.id == field.id) {
+          if (f.id == fi.id) {
             f.active = true;
           } else {
             f.active = false;
           }
         });
 
-        $scope.tabs = field.item.map(function(t) {
+        $scope.tabs = fi.item.map(function(t) {
           return {
             id: t.ID,
             title: t.Name,

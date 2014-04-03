@@ -1,5 +1,6 @@
 <link rel="stylesheet" type="text/css" href="css/navs.css">
 <link rel="stylesheet" type="text/css" href="css/calendar.css">
+<link rel="stylesheet" type="text/css" href="css/modals.css">
 <link rel="stylesheet" type="text/css" href="css/book.css">
 <nav id="sidebar">
     <header>
@@ -91,7 +92,7 @@
 
         <div class="cal-week-box clearfix">
             <div class="cal-column-fluid" ng-repeat="day in days">
-                <div class="cal-cell {{p.Status}}" ng-repeat="p in day.period" ng-class="{solo: p.OrderType===3}" data-time="{{p.StartTime.slice(0,5)}} - {{p.EndTime.slice(0,5)}}"></div>
+                <div class="cal-cell {{p.Status}}" ng-repeat="p in day.period" ng-class="{solo: p.OrderType===3}" data-time="{{p.StartTime.slice(0,5)}} - {{p.EndTime.slice(0,5)}}" ng-click="openDialog(p)"></div>
             </div>
         </div>
     </div>

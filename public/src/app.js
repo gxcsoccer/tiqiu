@@ -13,10 +13,6 @@ angular.module('tiqiu', ['ui.router', 'ui.bootstrap', 'chieffancypants.loadingBa
           url: '^/book',
           templateUrl: 'partial/book.html',
           controller: 'BookCtrl'
-        })
-        .state('404', {
-          url: '^/404',
-          templateUrl: 'partial/404.html'
         });
 
       $urlRouterProvider.otherwise('login');

@@ -61,7 +61,7 @@ angular.module('tiqiu')
             }
           }, function(response) {
             deferred.reject({
-              Message: '系统不可用'
+              HelpMessage: '系统不可用'
             });
           });
         return deferred.promise;
@@ -87,7 +87,7 @@ angular.module('tiqiu')
             }
           }, function(response) {
             deferred.reject({
-              Message: '系统不可用'
+              HelpMessage: '系统不可用'
             });
           });
         return deferred.promise;
@@ -116,9 +116,39 @@ angular.module('tiqiu')
             }
           }, function(response) {
             deferred.reject({
-              Message: '系统不可用'
+              HelpMessage: '系统不可用'
             });
           });
+        return deferred.promise;
+      },
+      orderFreeTeam: function(data) {
+        var user = Auth.getCurrentUser() || {};
+        var deferred = $q.defer();
+        $http({
+          url: 'http://api.tiqiu365.com/OrderHandler.ashx',
+          method: "GET",
+          params: {
+            action: 'OrderFreeTeam',
+            token: user.Token,
+            AccountBID: user.ID,
+            scheduledId: data.scheduledId,
+            price: data.price,
+            priceUnit: data.priceUnit,
+            minPlayerCount: data.minPlayerCount
+          }
+        })
+          .then(function(response) {
+            if (response.data && response.data.Result == 1) {
+              deferred.resolve();
+            } else {
+              deferred.reject(response.data)
+            }
+          }, function(response) {
+            deferred.reject({
+              HelpMessage: '系统不可用'
+            });
+          });
+
         return deferred.promise;
       }
     };
